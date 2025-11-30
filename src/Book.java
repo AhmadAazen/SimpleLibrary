@@ -55,7 +55,8 @@ public class Book {
     }
     public void returnBook(){
         if(this.isIssued){
-            System.out.println("Book returned by " + this.member.getName());
+            System.out.println("Book returned by" +
+                    " " + this.member.getName());
             this.member = null;
             this.isIssued = false;
         }

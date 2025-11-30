@@ -9,6 +9,8 @@ public class Main {
 
         Member member1 = new Member(1,"Aazen");
         Member member2 = new Member(2,"Aawez");
+
+        Library library = new Library("Fiction");
         book1.issueTo(member1);
         System.out.println(book1);
         book1.issueTo(member2);
@@ -19,6 +21,19 @@ public class Main {
         System.out.println(book1);
         book2.returnBook();
         System.out.println(book2);
+
+
+        library.addBook(book1);
+        library.addBook(book2);
+        library.addBook(book3);
+        library.printAllBooks();
+        Book book=library.findBookByTitle("HarryPotter");
+        if(book!=null){book.issueTo(member1);}
+
+
+        library.removeBookById(3);
+        library.removeBookById(3);
+        library.printAllBooks();
 
     }
 }
