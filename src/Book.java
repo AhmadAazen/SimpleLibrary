@@ -1,12 +1,13 @@
 public class Book {
+    private static Integer nextId=1;
     private Integer id;
     private String title;
     private String author;
     private Boolean isIssued=false;
     private Member member;
     public Book(){}
-    public Book(Integer id, String title, String author) {
-        this.id = id;
+    public Book( String title, String author) {
+        this.id=nextId++;
         this.title = title;
         this.author = author;
     }
@@ -15,9 +16,6 @@ public class Book {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -47,15 +45,15 @@ public class Book {
         if(!isIssued) {
             this.isIssued = true;
             this.member = member;
-            System.out.println("Issued to " + this.member.getName());
+            System.out.println(this.title+" issued to " + this.member.getName());
         }
         else{
-            System.out.println("Already Issued to " + this.member.getName());
+            System.out.println(this.title+" already Issued to " + this.member.getName());
         }
     }
     public void returnBook(){
         if(this.isIssued){
-            System.out.println("Book returned by" +
+            System.out.println(this.title+" returned by" +
                     " " + this.member.getName());
             this.member = null;
             this.isIssued = false;
@@ -63,6 +61,7 @@ public class Book {
         else
             System.out.println(this.title+" was never issued");
     }
+
 
     @Override
     public String toString() {

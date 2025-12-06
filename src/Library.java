@@ -1,13 +1,21 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Library {
     private final List<Book> books;
+    private final Map<Integer,Book> bookById ;
+    private final Map<Integer,Member> memberById;
+
     public Library(String libraryName) {
         this.books = new ArrayList<>();
+        this.bookById = new HashMap<>();
+        this.memberById = new HashMap<>();
     }
     public void addBook(Book book){
         this.books.add(book);
+        this.bookById.put(book.getId(),book);
+    }
+    public void addMember(Member member){
+        this.memberById.put(member.getMemberId(),member);
     }
     public void removeBookById(Integer bookId){
         //Can cause ConcurrentModificationException
@@ -20,8 +28,9 @@ public class Library {
 //        }
 
         //Safer way is to use removeIf function which uses predicate
-        boolean removed = books.removeIf(book -> book.getId().equals(bookId));
-        if(removed){
+        Book removedBook = bookById.remove(bookId);
+        if(removedBook!=null){
+            books.removeIf(book -> book.getId().equals(bookId));
             System.out.println("Book with id " + bookId + " has been removed");
         }
         else
@@ -42,4 +51,39 @@ public class Library {
             System.out.println(book);
         }
     }
+    public void printAllMembers(){
+        Set<Map.Entry<Integer, Member>> entries = memberById.entrySet();
+        for(Map.Entry<Integer, Member>entry:entries){
+            System.out.println(entry.getKey()+" : "+entry.getValue());
+        }
+    }
+    public Book getBookById(Integer bookId){
+        return bookById.get(bookId);
+    }
+    public Member getMemberById(Integer memberId){
+        return  memberById.get(memberId);
+    }
+    public void issueBookToMember(Integer bookId,Integer memberId){
+        Book book = getBookById(bookId);
+        Member member=getMemberById(memberId);
+        if(book==null || member==null){
+            if(book==null) {
+                System.out.println("Book with id: " + bookId + " not found");
+            }
+            if(member==null){
+                System.out.println("Member with id: " + memberId + " not found");
+            }
+        }else{
+            book.issueTo(member);
+        }
+    }
+    public void returnBookById(Integer bookId){
+        Book book = getBookById(bookId);
+        if(book!=null){
+            book.returnBook();
+        }else{
+            System.out.println("Book with id: "+bookId+" not found");
+        }
+    }
+
 }

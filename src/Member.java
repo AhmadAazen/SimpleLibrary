@@ -1,16 +1,14 @@
 public class Member {
-    private Integer memberId;
+    private static Integer nextMemberId=1;
+    private  Integer memberId;
     private String name;
     public Member(){}
-    public Member(Integer memberId, String name) {
-        this.memberId = memberId;
+    public Member(String name) {
+        this.memberId = nextMemberId++;
         this.name = name;
     }
     public Integer getMemberId() {
         return memberId;
-    }
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
     }
     public String getName() {
         return name;
